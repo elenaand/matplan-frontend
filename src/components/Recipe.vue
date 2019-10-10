@@ -1,7 +1,8 @@
 <template>
   <div>
     <textarea v-model="recipe" placeholder="Skriv inn oppskrift"></textarea>
-    <h1>Oppskrift: {{ recipe }}</h1>
+    <h1>{{ dag }}</h1>
+    <h2>{{ recipe }}</h2>
     <ul>
       <li>Innhold 1</li>
       <li>Innhold 2</li>
@@ -10,10 +11,12 @@
   </div>
 </template>
 
+// TODO: Save what recipe is selected
+
 <script>
-// hva data skal inn her da?
 export default {
   name: "Recipe",
+  props: { dag: String },
   data: function() {
     return { recipe: "" };
   }
@@ -21,4 +24,7 @@ export default {
 </script>
 
 <style>
+div {
+  padding: 10px;
+}
 </style>
