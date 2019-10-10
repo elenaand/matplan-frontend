@@ -2,9 +2,9 @@
   <div>
     <div class="nes-field">
       <label for="recipe">Legg til ny oppskrift:</label>
-      <textarea v-model="newRecipe" class="nes-input" placeholder="Skriv inn oppskrift" />
+      <textarea v-model="newRecipe" class="nes-input" placeholder="Skriv inn oppskrift"/>
     </div>
-    <button @click="recipes.push(newRecipe)" class="nes-btn is-success">Ny Oppskrift</button>
+    <button @click="addRecipe(newRecipe)" class="nes-btn is-success">Ny Oppskrift</button>
     <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
@@ -14,6 +14,12 @@ export default {
   name: "NewRecipe",
   data: function() {
     return { newRecipe: "", recipes: [] };
-  }
+  },
+	methods: {
+		addRecipe: function(newRecipe) {
+			this.recipes.push(newRecipe)
+			this.newRecipe = ""
+		}
+	}
 };
 </script>

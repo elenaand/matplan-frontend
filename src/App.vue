@@ -9,6 +9,10 @@
       <Recipe dag="Mandag" />
       <Recipe dag="Tirsdag" />
       <Recipe dag="Onsdag" />
+      <Recipe dag="Torsdag" />
+      <Recipe dag="Fredag" />
+      <Recipe dag="Lørdag" />
+      <Recipe dag="Søndag" />
     </div>
 
     <ShoppingList />
