@@ -1,8 +1,11 @@
 <template>
   <div>
-    <textarea v-model="newRecipe" placeholder="Skriv inn oppskrift" ></textarea>
-    <button @click="recipes.push(newRecipe)>NY</button>
-    <p>{{ recipes }}</p>
+    <div class="nes-field">
+      <label for="recipe">Legg til ny oppskrift:</label>
+      <textarea v-model="newRecipe" class="nes-input" placeholder="Skriv inn oppskrift" />
+    </div>
+    <button @click="recipes.push(newRecipe)" class="nes-btn is-success">Ny Oppskrift</button>
+    <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
 

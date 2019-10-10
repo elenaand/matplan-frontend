@@ -1,6 +1,9 @@
 <template>
   <div>
-    <textarea v-model="recipe" placeholder="Skriv inn oppskrift"></textarea>
+    <div class="nes-field">
+      <label for="recipe">Oppskrift:</label>
+      <textarea v-model="recipe" class="nes-input" placeholder="Skriv inn oppskrift"></textarea>
+    </div>
     <h1>{{ dag }}</h1>
     <h2>{{ recipe }}</h2>
     <ul>
