@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card" >
     <h1>{{ dag }}</h1>
     <select v-model="selected">
       <option
@@ -73,4 +73,17 @@ export default {
 div {
   padding: 10px;
 }
+
+.card {
+  border: 1px solid #2c3e50;
+  margin: 10px;
+  padding:20px
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+
 </style>
