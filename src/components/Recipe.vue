@@ -1,27 +1,70 @@
 <template>
   <div>
-    <div class="nes-field">
-      <label for="recipe">Oppskrift:</label>
-      <textarea v-model="recipe" class="nes-input" placeholder="Skriv inn oppskrift"></textarea>
-    </div>
     <h1>{{ dag }}</h1>
-    <h2>{{ recipe }}</h2>
+    <select v-model="selected">
+      <option
+        v-for="option in fakeRecipes"
+        v-bind:value="option.value"
+        v-bind:key="option.value"
+      >{{ option.text }}</option>
+    </select>
+
+    <h2>{{ fakeRecipes[selected].text }}</h2>
     <ul>
-      <li>Innhold 1</li>
-      <li>Innhold 2</li>
-      <li>Innhold 3</li>
+      <li v-for="ingredient in fakeRecipes[selected].ingredients">{{ ingredient }}</li>
     </ul>
   </div>
 </template>
 
-// TODO: Save what recipe is selected
-
 <script>
 export default {
   name: "Recipe",
-  props: { dag: String },
+  props: {
+    dag: String
+  },
   data: function() {
-    return { recipe: "" };
+    return {
+      recipe: "",
+      selected: "0",
+      fakeRecipes: [
+        {
+          text: "kjøttkaker",
+          value: "0",
+          ingredients: ["kjøttkaker", "brunsaus", "poteter", "gulrot"]
+        },
+        {
+          text: "pasta",
+          value: "1",
+          ingredients: ["pasta", "tomatsaus", "kjøttboller"]
+        },
+        {
+          text: "taco",
+          value: "2",
+          ingredients: [
+            "tacolefser",
+            "tacogreens",
+            "taco-kjøttdeig",
+            "tacokrydder",
+            "tacochips"
+          ]
+        },
+        {
+          text: "enchiladas",
+          value: "3",
+          ingredients: ["enchiladaskit", "ost"]
+        },
+        {
+          text: "tochiladas",
+          value: "4",
+          ingredients: ["enchiladaskit", "enchiladaskit", "ost", "ost"]
+        },
+        {
+          text: "laks med søtpotetmos",
+          value: "5",
+          ingredients: ["laks", "søtpotet", "mos"]
+        }
+      ]
+    };
   }
 };
 </script>

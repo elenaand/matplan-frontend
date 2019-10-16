@@ -1,10 +1,5 @@
 <template>
-
   <div id="app">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"/>
-    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
-
-
     <div id="recipes">
       <Recipe dag="Mandag" />
       <Recipe dag="Tirsdag" />
@@ -37,9 +32,8 @@ export default {
 </script>
 
 <style>
-
 #app {
-  font-family: 'Press Start 2P', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

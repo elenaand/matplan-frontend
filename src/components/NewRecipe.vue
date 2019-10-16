@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div class="nes-field">
-      <label for="recipe">Legg til ny oppskrift:</label>
-      <textarea v-model="newRecipe" class="nes-input" placeholder="Skriv inn oppskrift"/>
-    </div>
-    <button @click="addRecipe(newRecipe)" class="nes-btn is-success">Ny Oppskrift</button>
+    <label for="recipe">Legg til ny oppskrift:</label>
+    <br />
+
+    <textarea v-model="newRecipe" placeholder="Skriv inn oppskrift" />
+    <br />
+    
+    <button @click="addRecipe(newRecipe)">Ny Oppskrift</button>
     <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
@@ -15,11 +17,13 @@ export default {
   data: function() {
     return { newRecipe: "", recipes: [] };
   },
-	methods: {
-		addRecipe: function(newRecipe) {
-			this.recipes.push(newRecipe)
-			this.newRecipe = ""
-		}
-	}
+  methods: {
+    addRecipe: function(newRecipe) {
+      if (this.recipe != "") {
+        this.recipes.push(newRecipe);
+      }
+      this.newRecipe = "";
+    }
+  }
 };
 </script>
