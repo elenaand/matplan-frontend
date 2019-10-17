@@ -1,6 +1,6 @@
 # matplan-frontend
 
-- [matplan-lanbda](https://github.com/EirikRogno/matplan-lambda)
+- [matplan-lambda](https://github.com/EirikRogno/matplan-lambda)
 
 
 ## Project setup
