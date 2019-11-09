@@ -1,13 +1,7 @@
 <template>
   <div id="app">
     <div id="recipes">
-      <Recipe dag="Mandag" />
-      <Recipe dag="Tirsdag" />
-      <Recipe dag="Onsdag" />
-      <Recipe dag="Torsdag" />
-      <Recipe dag="Fredag" />
-      <Recipe dag="Lørdag" />
-      <Recipe dag="Søndag" />
+      <Recipe v-for="day in days" :recipe="recipe" :key="day" :day="day" />
     </div>
 
     <ShoppingList />
@@ -20,6 +14,7 @@
 import ShoppingList from "./components/ShoppingList.vue";
 import Recipe from "./components/Recipe.vue";
 import NewRecipe from "./components/NewRecipe.vue";
+import { getRecipes } from "./api.js";
 
 export default {
   name: "app",
@@ -27,6 +22,23 @@ export default {
     Recipe,
     ShoppingList,
     NewRecipe
+  },
+  data: function() {
+    return {
+      recipe: [],
+      days: [
+        "Mandag",
+        "Tirsdag",
+        "Onsdag",
+        "Torsdag",
+        "Fredag",
+        "Lørdag",
+        "Søndag"
+      ]
+    };
+  },
+  mounted: async function() {
+    this.recipe = await getRecipes();
   }
 };
 </script>
