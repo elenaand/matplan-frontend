@@ -1,13 +1,12 @@
 <template>
-  <div class="card" >
-    <h1>{{ dag }}</h1>
+  <div class="card">
+    <h1 class="day">{{ day }}</h1>
     <select v-model="selected">
       <option
         v-for="option in recipe"
         v-bind:value="recipe.indexOf(option)"
         v-bind:key="option.id"
-        >{{ option.description }}</option
-      >
+      >{{ option.description }}</option>
     </select>
 
     <h2>{{ selected !== undefined ? recipe[selected].text : "" }}</h2>
@@ -15,9 +14,7 @@
       <li
         v-for="ingredient in recipe[selected].ingredients"
         v-bind:key="ingredient.id"
-      >
-        {{ ingredient.name }}
-      </li>
+      >{{ ingredient.name }}</li>
     </ul>
   </div>
 </template>
@@ -42,16 +39,31 @@ div {
   padding: 10px;
 }
 
-.card {
-  border: 1px solid #2c3e50;
-  margin: 10px;
-  padding:20px
+@media screen and (max-width: 900px) {
+  select {
+    font-size: large;
+    border: none;
+    outline: none;
+  }
 }
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+@media screen and (min-width: 900px) {
+  .day {
+    margin-top: -45px;
+    background-color: white;
+    color: #76B086;
+  }
+
+  .card {
+    border: 3px solid #FCDEDE;
+    margin: 23px;
+    padding: 20px;
+    flex-basis: 15%;
+  }
+
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
 }
-
-
 </style>
