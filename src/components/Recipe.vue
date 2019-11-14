@@ -3,15 +3,21 @@
     <h1>{{ dag }}</h1>
     <select v-model="selected">
       <option
-        v-for="option in fakeRecipes"
-        v-bind:value="option.value"
-        v-bind:key="option.value"
-      >{{ option.text }}</option>
+        v-for="option in recipe"
+        v-bind:value="recipe.indexOf(option)"
+        v-bind:key="option.id"
+        >{{ option.description }}</option
+      >
     </select>
 
-    <h2>{{ fakeRecipes[selected].text }}</h2>
-    <ul>
-      <li v-for="ingredient in fakeRecipes[selected].ingredients">{{ ingredient }}</li>
+    <h2>{{ selected !== undefined ? recipe[selected].text : "" }}</h2>
+    <ul v-if="selected !== undefined">
+      <li
+        v-for="ingredient in recipe[selected].ingredients"
+        v-bind:key="ingredient.id"
+      >
+        {{ ingredient.name }}
+      </li>
     </ul>
   </div>
 </template>
@@ -20,50 +26,12 @@
 export default {
   name: "Recipe",
   props: {
-    dag: String
+    recipe: Array,
+    day: String
   },
   data: function() {
     return {
-      recipe: "",
-      selected: "0",
-      fakeRecipes: [
-        {
-          text: "kjøttkaker",
-          value: "0",
-          ingredients: ["kjøttkaker", "brunsaus", "poteter", "gulrot"]
-        },
-        {
-          text: "pasta",
-          value: "1",
-          ingredients: ["pasta", "tomatsaus", "kjøttboller"]
-        },
-        {
-          text: "taco",
-          value: "2",
-          ingredients: [
-            "tacolefser",
-            "tacogreens",
-            "taco-kjøttdeig",
-            "tacokrydder",
-            "tacochips"
-          ]
-        },
-        {
-          text: "enchiladas",
-          value: "3",
-          ingredients: ["enchiladaskit", "ost"]
-        },
-        {
-          text: "tochiladas",
-          value: "4",
-          ingredients: ["enchiladaskit", "enchiladaskit", "ost", "ost"]
-        },
-        {
-          text: "laks med søtpotetmos",
-          value: "5",
-          ingredients: ["laks", "søtpotet", "mos"]
-        }
-      ]
+      selected: undefined
     };
   }
 };

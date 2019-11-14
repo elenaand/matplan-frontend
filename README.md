@@ -1,5 +1,8 @@
 # matplan-frontend
 
+- [matplan-lambda](https://github.com/EirikRogno/matplan-lambda)
+
+
 ## Project setup
 ```
 npm install
