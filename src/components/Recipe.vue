@@ -1,21 +1,30 @@
 <template>
   <div class="card">
     <h1 class="day">{{ day }}</h1>
-    <select v-model="selected">
-      <option
-        v-for="option in recipe"
-        v-bind:value="recipe.indexOf(option)"
-        v-bind:key="option.id"
-      >{{ option.description }}</option>
-    </select>
 
-    <h2>{{ selected !== undefined ? recipe[selected].text : "" }}</h2>
+    <div v-if="selected !== undefined && isSelectHidden">
+      <h2>{{recipe[selected].description}}</h2>
+      <button @click="toggleHideSelect()">X</button>
+    </div>
+    <div v-else>
+      <select v-model="selected">
+        <option
+          v-for="option in recipe"
+          v-bind:value="recipe.indexOf(option)"
+          v-bind:key="option.id"
+        >{{ option.description }}</option>
+      </select>
+      <button @click="toggleHideSelect()">ok</button>
+    </div>
+    <!--
+    <h2>{{ selected !== undefined ? recipe[selected].description : "" }}</h2>
     <ul v-if="selected !== undefined">
       <li
         v-for="ingredient in recipe[selected].ingredients"
         v-bind:key="ingredient.id"
       >{{ ingredient.name }}</li>
     </ul>
+    -->
   </div>
 </template>
 
@@ -28,8 +37,14 @@ export default {
   },
   data: function() {
     return {
-      selected: undefined
+      selected: undefined,
+      isSelectHidden: true
     };
+  },
+  methods: {
+    toggleHideSelect: function() {
+      this.isSelectHidden = !this.isSelectHidden;
+    }
   }
 };
 </script>
