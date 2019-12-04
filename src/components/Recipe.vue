@@ -49,13 +49,12 @@ div {
 
 @media screen and (min-width: 900px) {
   .day {
-    margin-top: -45px;
-    background-color: white;
-    color: #76B086;
+    margin-top: 0;
+    color: #76b086;
   }
 
   .card {
-    border: 3px solid #FCDEDE;
+    background-color: #fcdede;
     margin: 23px;
     padding: 20px;
     flex-basis: 15%;
