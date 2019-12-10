@@ -1,10 +1,9 @@
 <template>
-  <div class="card">
+  <div class="card mobile-card">
     <h1 class="day">{{ day }}</h1>
 
     <div v-if="selected !== undefined && isSelectHidden">
-      <h2>{{recipe[selected].description}}</h2>
-      <button @click="toggleHideSelect()">X</button>
+      <h2 id="recipe-title" @click="toggleHideSelect()">{{recipe[selected].description}}</h2>
     </div>
     <div v-else>
       <select v-model="selected">
@@ -14,7 +13,7 @@
           v-bind:key="option.id"
         >{{ option.description }}</option>
       </select>
-      <button @click="toggleHideSelect()">ok</button>
+      <button v-if="selected !== undefined" @click="toggleHideSelect()">ok</button>
     </div>
     <!--
     <h2>{{ selected !== undefined ? recipe[selected].description : "" }}</h2>
@@ -50,8 +49,8 @@ export default {
 </script>
 
 <style>
-div {
-  padding: 10px;
+#recipe-title:hover {
+  text-decoration: line-through;
 }
 
 @media screen and (max-width: 900px) {
@@ -59,6 +58,18 @@ div {
     font-size: large;
     border: none;
     outline: none;
+  }
+
+  .mobile-card:nth-child(2n) {
+    background-color: #fcdede;
+    margin: 20px;
+    padding: 10px 0 40px 0 
+  }
+
+  .mobile-card:nth-child(2n+1) {
+    background-color: #76b086;
+    margin: 20px;
+    padding: 10px 0 40px 0;
   }
 }
 
