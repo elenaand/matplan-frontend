@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label for="recipe">Legg til ny oppskrift:</label>
+    <label>Legg til ny oppskrift:</label>
     <br />
     
-    <textarea v-model="newRecipe" placeholder="Tittel" />
+    <textarea v-model="title" placeholder="Tittel" />
     <br />
-    <textarea placeholder="Tags (liste av strenger)" />
+    <textarea v-model="tags" placeholder="Tags (liste av strenger)" />
     <br />
     <select>
       <option>En ingrediens</option>
@@ -15,7 +15,7 @@
     <br />
     <textarea placeholder="ny ingrediens (navn, kategori, mengde)" />
     
-    <button @click="addRecipe(newRecipe)">Ny Oppskrift</button>
+    <button @click="addRecipe(title, tags)">Ny Oppskrift</button>
     <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
@@ -24,14 +24,18 @@
 export default {
   name: "NewRecipe",
   data: function() {
-    return { newRecipe: "", recipes: [] };
+    return { newRecipe: {title: "", tags: ""}, recipes: [] };
   },
   methods: {
-    addRecipe: function(newRecipe) {
-      if (this.recipe != "") {
-        this.recipes.push(newRecipe);
+    addRecipe: function(title, tags) {
+      if (title != "") {
+        this.recipes.push(title);
       }
-      this.newRecipe = "";
+      if (tags != "") {
+        this.recipes.push(tags);
+      }
+      this.title = "";
+      this.tags = "";
     }
   }
 };
