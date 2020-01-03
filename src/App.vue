@@ -4,24 +4,30 @@
       <Recipe v-for="day in days" :recipe="recipe" :key="day" :day="day" />
     </div>
 
-    <ShoppingList />
+    <!-- <ShoppingList /> -->
 
-    <NewRecipe />
+    <router-link :to="{ name: 'new-recipe' }">Ny oppskrift</router-link>
+    -
+    <router-link :to="{ name: 'shopping-list' }">Se handleliste</router-link>
+
+    <router-view/>
+    <!-- <NewRecipe /> -->
   </div>
 </template>
 
 <script>
-import ShoppingList from "./components/ShoppingList.vue";
 import Recipe from "./components/Recipe.vue";
-import NewRecipe from "./components/NewRecipe.vue";
 import { getRecipes } from "./api.js";
 
 export default {
   name: "app",
   components: {
-    Recipe,
-    ShoppingList,
-    NewRecipe
+    Recipe
+  },
+  methods: {
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    }
   },
   data: function() {
     return {
