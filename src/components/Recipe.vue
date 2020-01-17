@@ -3,7 +3,7 @@
     <h1 class="day">{{ day }}</h1>
 
     <div v-if="selected !== undefined && isSelectHidden">
-      <h2 id="recipe-title" @click="toggleHideSelect()">{{recipe[selected].description}}</h2>
+      <h2 id="recipe-title">{{recipe[selected].description}} <delete-icon id="delete-icon" @click="toggleHideSelect()"/></h2>
     </div>
     <div v-else>
       <select v-model="selected">
@@ -28,8 +28,13 @@
 </template>
 
 <script>
+import DeleteIcon from 'vue-material-design-icons/Delete.vue';
+
 export default {
   name: "Recipe",
+  components: {
+    DeleteIcon
+  },
   props: {
     recipe: Array,
     day: String
@@ -50,7 +55,16 @@ export default {
 
 <style>
 #recipe-title:hover {
-  text-decoration: line-through;
+  font-weight: bold;
+}
+
+#delete-icon:hover {
+  margin-top: 20px;
+ color: black;
+}
+
+h2 {
+  font-weight: lighter;
 }
 
 @media screen and (max-width: 900px) {
@@ -61,13 +75,13 @@ export default {
   }
 
   .mobile-card:nth-child(2n) {
-    background-color: #fcdede;
+    background-color: #F8E4E3;
     margin: 20px;
     padding: 10px 0 40px 0 
   }
 
   .mobile-card:nth-child(2n+1) {
-    background-color: #76b086;
+    background-color: #9BB3A4;
     margin: 20px;
     padding: 10px 0 40px 0;
   }
@@ -76,11 +90,11 @@ export default {
 @media screen and (min-width: 900px) {
   .day {
     margin-top: 0;
-    color: #76b086;
+    color: #2c3e50;
   }
 
   .card {
-    background-color: #fcdede;
+    background-color: #F8E4E3;
     margin: 23px;
     padding: 20px;
     flex-basis: 15%;
@@ -88,7 +102,7 @@ export default {
 
   /* On mouse-over, add a deeper shadow */
   .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px 0 #B5817F;
   }
 }
 </style>
