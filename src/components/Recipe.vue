@@ -1,6 +1,6 @@
 <template>
   <div class="card mobile-card">
-    <h1 class="day">{{ day }}</h1>
+    <h1 class="day-title">{{ day }}</h1>
 
     <div v-if="selected !== undefined && isSelectHidden">
       <h2 id="recipe-title">{{recipe[selected].description}} <delete-icon id="delete-icon" @click="toggleHideSelect()"/></h2>
@@ -13,7 +13,7 @@
           v-bind:key="option.id"
         >{{ option.description }}</option>
       </select>
-      <button v-if="selected !== undefined" @click="toggleHideSelect()">ok</button>
+      <button class="button" v-if="selected !== undefined" @click="toggleHideSelect()">ok</button>
     </div>
     <!--
     <h2>{{ selected !== undefined ? recipe[selected].description : "" }}</h2>
@@ -54,26 +54,25 @@ export default {
 </script>
 
 <style>
-#recipe-title:hover {
-  font-weight: bold;
-}
 
-#delete-icon:hover {
-  margin-top: 20px;
- color: black;
+#delete-icon {
+  vertical-align: middle;
 }
 
 h2 {
   font-weight: lighter;
 }
 
-@media screen and (max-width: 900px) {
-  select {
-    font-size: large;
-    border: none;
-    outline: none;
-  }
+button {
+  font-size: large;
+}
 
+select {
+  font-size: large;
+  outline: none;
+}
+
+@media screen and (max-width: 900px) {
   .mobile-card:nth-child(2n) {
     background-color: #F8E4E3;
     margin: 20px;
@@ -88,9 +87,13 @@ h2 {
 }
 
 @media screen and (min-width: 900px) {
-  .day {
+  .day-title {
     margin-top: 0;
     color: #2c3e50;
+  }
+
+  .day-title:hover {
+    color: black;
   }
 
   .card {
@@ -103,6 +106,10 @@ h2 {
   /* On mouse-over, add a deeper shadow */
   .card:hover {
     box-shadow: 0 8px 16px 0 #B5817F;
+}
+
+  #delete-icon:hover {
+    color: #AB4843;
   }
 }
 </style>
