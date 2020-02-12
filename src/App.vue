@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="recipes">
+    <div class="recipes">
       <Recipe v-for="day in days" :recipe="recipe" :key="day" :day="day" />
     </div>
 
@@ -59,7 +59,14 @@ export default {
   margin-top: 20px;
 }
 
-#recipes {
-  display: flex;
+@media screen and (min-width: 900px) {
+  .recipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 10px;
+    width: 100%;
+  }
 }
 </style>

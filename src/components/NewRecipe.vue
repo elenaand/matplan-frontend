@@ -1,13 +1,17 @@
 <template>
-  <div>
+  <div id="new-recipe">
     <label>Legg til ny oppskrift:</label>
     <br />
     
+    <label>Tittel: </Label>
     <textarea v-model="newRecipe.title" placeholder="Tittel" />
     <br />
+
+    <label>Tags: </label>
     <textarea v-model="newRecipe.tags" placeholder="Tags (liste av strenger)" />
     <br />
 
+    <label>Ingrediens:</label>
     <select v-model="selectedExistingIngredientId">
       <option value="placeholder" disabled selected>Velg ingrediens</option>
       <option
@@ -18,6 +22,9 @@
       >
     </select>
     <br />
+    <br />
+
+    <label>Ny ingrediens</label>
     <textarea v-model="newIngredient" placeholder="ny ingrediens (navn, kategori, mengde)" />
     
     <button @click="addRecipe()">Ny Oppskrift</button>
@@ -72,6 +79,7 @@ export default {
         tags: "",
       };
     },
+
     /*return { 
       recipes: [],
 
@@ -91,18 +99,31 @@ export default {
       this.newRecipe = "";
     },
     addNewIngredient: function() {
-
       const newIngredient = {
-          
       }
-
     },
     addExistingIngredient: function() {
 
     },*/
+
   },
   mounted: async function() {
     this.ingredient = await getIngredients();
   }
 };
 </script>
+
+
+<style>
+
+#new-recipe{
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+
+textarea {
+  width: 20%
+}
+
+</style>
