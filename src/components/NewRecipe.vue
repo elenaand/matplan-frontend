@@ -2,12 +2,12 @@
   <div id="new-recipe">
     <label>Legg til ny oppskrift:</label>
     <br />
-    
-    <label>Tittel: </Label>
+
+    <label>Tittel:</label>
     <textarea v-model="newRecipe.title" placeholder="Tittel" />
     <br />
 
-    <label>Tags: </label>
+    <label>Tags:</label>
     <textarea v-model="newRecipe.tags" placeholder="Tags (liste av strenger)" />
     <br />
 
@@ -18,40 +18,55 @@
         v-for="option in ingredient"
         v-bind:value="option.id"
         v-bind:key="option.id"
-        >{{ option.name }}</option
-      >
+      >{{ option.name }}</option>
     </select>
     <br />
     <br />
 
+    <div id="new-ingredient">
     <label>Ny ingrediens</label>
-    <textarea v-model="newIngredient" placeholder="ny ingrediens (navn, kategori, mengde)" />
-    
+    <textarea v-model="newIngredient.name" placeholder="ny ingrediens - navn (navn, kategori, mengde)" />
+    <select v-model="newIngredient.category">
+      <option value="placeholder" disabled selected>Ny ingrediens - kategori</option>
+      <option
+        v-for="option in possileCategories"
+        v-bind:value="option"
+        v-bind:key="option"
+      >{{ option }}</option>
+    </select>
+    <textarea v-model="newIngredient.amount" placeholder="ny ingrediens - mengde" />
+    </div>
+
     <button @click="addRecipe()">Ny Oppskrift</button>
     <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
 
 <script>
-import { postRecipe, getIngredients } from '../api.js';
+import { postRecipe, getIngredients } from "../api.js";
 
 export default {
   name: "NewRecipe",
   data: function() {
-    return { 
+    return {
       newRecipe: {
-        title: "", 
-        tags: "",
-      }, 
-      newIngredient: "",
+        title: "",
+        tags: ""
+      },
+      newIngredient: {
+        name: "",
+        category: "placeholder",
+        amount: ""
+      },
       recipes: [],
       ingredient: [],
       selectedExistingIngredientId: "placeholder",
+      possileCategories: ["meat", "other", "frozen"]
     };
   },
   methods: {
     addRecipe: async function() {
-      const {title, tags} = this.newRecipe;
+      const { title, tags } = this.newRecipe;
 
       if (title != "") {
         this.recipes.push(title);
@@ -62,23 +77,28 @@ export default {
 
       const description = title;
       const existingIngredients = [
-        {id: this.selectedExistingIngredientId, amount: 1} 
+        { id: this.selectedExistingIngredientId, amount: 1 }
       ];
       const newIngredients = [
         {
-          name: this.newIngredient.split(",")[0],
-          category: this.newIngredient.split(",")[1].trim(),
-          amount: parseInt(this.newIngredient.split(",")[2]),
+          name: this.newIngredientName,
+          category: this.newIngredientCategory,
+          amount: parseInt(this.newIngredientAmount)
         }
-      ]
+      ];
 
-      await postRecipe(description, tags.split(","), newIngredients, existingIngredients)
+      await postRecipe(
+        description,
+        tags.split(","),
+        newIngredients,
+        existingIngredients
+      );
 
       this.newRecipe = {
         title: "",
-        tags: "",
+        tags: ""
       };
-    },
+    }
 
     /*return { 
       recipes: [],
@@ -116,14 +136,29 @@ export default {
 
 <style>
 
-#new-recipe{
+#new-recipe {
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  align-items: baseline;
+      display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#new-ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #9BB3A4;
+  padding: 10px;
+}
+
+#new-ingredient textarea{
+  width: 100%;
 }
 
 textarea {
-  width: 20%
+  width: 25%;
 }
-
 </style>
