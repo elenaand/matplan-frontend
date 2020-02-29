@@ -67,11 +67,6 @@ button {
   font-size: large;
 }
 
-select {
-  font-size: large;
-  outline: none;
-}
-
 @media screen and (max-width: 900px) {
   .mobile-card:nth-child(2n) {
     background-color: #F8E4E3;
@@ -101,6 +96,11 @@ select {
     margin: 23px;
     padding: 20px;
     flex-basis: 15%;
+  }
+  
+  select {
+    font-size: large;
+    outline: none;
   }
 
   /* On mouse-over, add a deeper shadow */

@@ -1,7 +1,6 @@
 <template>
   <div id="new-recipe">
-    <label>Legg til ny oppskrift:</label>
-    <br />
+    <h1>Legg til ny oppskrift</h1>
 
     <label>Tittel:</label>
     <textarea v-model="newRecipe.title" placeholder="Tittel" />
@@ -12,8 +11,8 @@
     <br />
 
     <label>Ingrediens:</label>
-    <select v-model="selectedExistingIngredientId">
-      <option value="placeholder" disabled selected>Velg ingrediens</option>
+    <select v-model="selectedExistingIngredientId" multiple>
+      <option value="" disabled selected>Velg fra eksisterende ingredienser</option>
       <option
         v-for="option in ingredient"
         v-bind:value="option.id"
@@ -24,20 +23,26 @@
     <br />
 
     <div id="new-ingredient">
-    <label>Ny ingrediens</label>
+    <h2>Ny ingrediens</h2>
+
+    <label>Navn på ingrediens</label>
     <textarea v-model="newIngredient.name" placeholder="ny ingrediens - navn (navn, kategori, mengde)" />
+
+    <label>Kategori</label>
     <select v-model="newIngredient.category">
-      <option value="placeholder" disabled selected>Ny ingrediens - kategori</option>
       <option
         v-for="option in possileCategories"
         v-bind:value="option"
         v-bind:key="option"
       >{{ option }}</option>
     </select>
+
+    <label>Antall/ mengde</label>
     <textarea v-model="newIngredient.amount" placeholder="ny ingrediens - mengde" />
     </div>
 
-    <button @click="addRecipe()">Ny Oppskrift</button>
+    <br />
+    <button @click="addRecipe()">Lagre ny oppskrift</button>
     <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
@@ -61,7 +66,7 @@ export default {
       recipes: [],
       ingredient: [],
       selectedExistingIngredientId: "placeholder",
-      possileCategories: ["meat", "other", "frozen"]
+      possileCategories: ["MEAT", "OTHER", "FROZEN"]
     };
   },
   methods: {
@@ -138,17 +143,15 @@ export default {
 
 #new-recipe {
   display: flex;
+  text-align: left;
+  padding: 1em;
   justify-content: center;
   flex-direction: column;
       display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #new-ingredient {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   background-color: #9BB3A4;
   padding: 10px;
@@ -158,7 +161,21 @@ export default {
   width: 100%;
 }
 
-textarea {
-  width: 25%;
+button {
+  padding: 0.5em;
+  background-color: #F8E4E3;
 }
+
+@media screen and (max-width: 900px) {
+  textarea {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  textarea {
+    width:auto;
+  }
+}
+
 </style>
