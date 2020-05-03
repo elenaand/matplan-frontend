@@ -11,7 +11,7 @@
     <br />
 
     <label>Ingrediens:</label>
-    <select v-model="selectedExistingIngredientId" multiple>
+    <select v-model="selectedExistingIngredientIds" multiple>
       <option value="" disabled selected>Velg fra eksisterende ingredienser</option>
       <option
         v-for="option in ingredient"
@@ -31,7 +31,7 @@
     <label>Kategori</label>
     <select v-model="newIngredient.category">
       <option
-        v-for="option in possileCategories"
+        v-for="option in possibleCategories"
         v-bind:value="option"
         v-bind:key="option"
       >{{ option }}</option>
@@ -43,12 +43,12 @@
 
     <br />
     <button @click="addRecipe()">Lagre ny oppskrift</button>
-    <p>Oppskriftstittler i en liste: {{ recipes }}</p>
   </div>
 </template>
 
 <script>
 import { postRecipe, getIngredients } from "../api.js";
+import { createNewIngredientObject, createExistingIngredientObject } from "../utils.js";
 
 export default {
   name: "NewRecipe",
@@ -63,33 +63,20 @@ export default {
         category: "placeholder",
         amount: ""
       },
-      recipes: [],
       ingredient: [],
-      selectedExistingIngredientId: "placeholder",
-      possileCategories: ["MEAT", "OTHER", "FROZEN"]
+      selectedExistingIngredientIds: "placeholder",
+      possibleCategories: ["MEAT", "OTHER", "FROZEN"]
     };
   },
   methods: {
     addRecipe: async function() {
       const { title, tags } = this.newRecipe;
 
-      if (title != "") {
-        this.recipes.push(title);
-      }
-      if (tags != "") {
-        this.recipes.push(tags);
-      }
-
       const description = title;
-      const existingIngredients = [
-        { id: this.selectedExistingIngredientId, amount: 1 }
-      ];
+      const existingIngredients = this.selectedExistingIngredientIds.map(id => createExistingIngredientObject(id, 1))
+
       const newIngredients = [
-        {
-          name: this.newIngredientName,
-          category: this.newIngredientCategory,
-          amount: parseInt(this.newIngredientAmount)
-        }
+        createNewIngredientObject(this.newIngredient.name, this.newIngredient.category, parseInt(this.newIngredient.amount))
       ];
 
       await postRecipe(
@@ -104,33 +91,6 @@ export default {
         tags: ""
       };
     }
-
-    /*return { 
-      recipes: [],
-
-      newIngredients: [],
-      existingIngredients: [],
-
-      newRecipeDescription: "", 
-      newIngredientName: "",
-      newIngredientAmount: "",
-      selectedExistingIngredientIndex: undefined,
-      existingIngredientAmount: "",
-    };
-  },
-  methods: {
-    addRecipe: function() {
-      this.recipes.push(newRecipeDescription);
-      this.newRecipe = "";
-    },
-    addNewIngredient: function() {
-      const newIngredient = {
-      }
-    },
-    addExistingIngredient: function() {
-
-    },*/
-
   },
   mounted: async function() {
     this.ingredient = await getIngredients();
