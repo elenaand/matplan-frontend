@@ -12,7 +12,7 @@
 <script>
 // hva data skal inn?
 export default {
-  name: 'ShoppingList',
+  name: "ShoppingList"
 };
 </script>
 

@@ -6,11 +6,10 @@
 
     <!-- <ShoppingList /> -->
 
-    <router-link :to="{ name: 'new-recipe' }">Ny oppskrift</router-link>
-    -
+    <router-link :to="{ name: 'new-recipe' }">Ny oppskrift</router-link>-
     <router-link :to="{ name: 'shopping-list' }">Se handleliste</router-link>
 
-    <router-view/>
+    <router-view />
     <!-- <NewRecipe /> -->
   </div>
 </template>
@@ -26,7 +25,7 @@ export default {
   },
   methods: {
     goBack() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
   data: function() {

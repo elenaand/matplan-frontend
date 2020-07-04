@@ -3,7 +3,10 @@
     <h1 class="day-title">{{ day }}</h1>
 
     <div v-if="selected !== undefined && isSelectHidden">
-      <h2 id="recipe-title">{{recipe[selected].description}} <delete-icon id="delete-icon" @click="toggleHideSelect()"/></h2>
+      <h2 id="recipe-title">
+        {{recipe[selected].description}}
+        <delete-icon id="delete-icon" @click="toggleHideSelect()" />
+      </h2>
     </div>
     <div v-else>
       <select v-model="selected">
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-import DeleteIcon from 'vue-material-design-icons/Delete.vue';
+import DeleteIcon from "vue-material-design-icons/Delete.vue";
 
 export default {
   name: "Recipe",
@@ -54,7 +57,6 @@ export default {
 </script>
 
 <style>
-
 #delete-icon {
   vertical-align: middle;
 }
@@ -69,13 +71,13 @@ button {
 
 @media screen and (max-width: 900px) {
   .mobile-card:nth-child(2n) {
-    background-color: #F8E4E3;
+    background-color: #f8e4e3;
     margin: 20px;
-    padding: 10px 0 40px 0 
+    padding: 10px 0 40px 0;
   }
 
-  .mobile-card:nth-child(2n+1) {
-    background-color: #9BB3A4;
+  .mobile-card:nth-child(2n + 1) {
+    background-color: #9bb3a4;
     margin: 20px;
     padding: 10px 0 40px 0;
   }
@@ -92,12 +94,12 @@ button {
   }
 
   .card {
-    background-color: #F8E4E3;
+    background-color: #f8e4e3;
     margin: 23px;
     padding: 20px;
     flex-basis: 15%;
   }
-  
+
   select {
     font-size: large;
     outline: none;
@@ -105,11 +107,11 @@ button {
 
   /* On mouse-over, add a deeper shadow */
   .card:hover {
-    box-shadow: 0 8px 16px 0 #B5817F;
-}
+    box-shadow: 0 8px 16px 0 #b5817f;
+  }
 
   #delete-icon:hover {
-    color: #AB4843;
+    color: #ab4843;
   }
 }
 </style>

@@ -1,26 +1,26 @@
 const BASE_URL = "https://md1wxt4y6d.execute-api.eu-west-1.amazonaws.com/dev";
 
 export const getRecipes = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     window
       .fetch(BASE_URL + "/recipe", {
         headers: {
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       })
-      .then(res => resolve(res.json()));
+      .then((res) => resolve(res.json()));
   });
 };
 
 export const getIngredients = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     window
       .fetch(BASE_URL + "/ingredient", {
         headers: {
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       })
-      .then(res => resolve(res.json()));
+      .then((res) => resolve(res.json()));
   });
 };
 
@@ -42,14 +42,18 @@ export const getIngredients = () => {
 		}
 	]
 }*/
-export const postRecipe = (description, tags, newIngredients, existingIngredients) => {
-
+export const postRecipe = (
+  description,
+  tags,
+  newIngredients,
+  existingIngredients
+) => {
   const data = {
     description: description,
     tags: tags,
     newIngredients: newIngredients,
     existingIngredients: existingIngredients,
-  }
+  };
 
   return new Promise((resolve) => {
     window
@@ -60,7 +64,6 @@ export const postRecipe = (description, tags, newIngredients, existingIngredient
         },
         body: JSON.stringify(data),
       })
-      .then(res => resolve(res.json()));
+      .then((res) => resolve(res.json()));
   });
-
 };
