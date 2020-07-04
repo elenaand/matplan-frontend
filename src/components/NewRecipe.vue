@@ -3,7 +3,7 @@
     <h1>Legg til ny oppskrift</h1>
 
     <label>Tittel:</label>
-    <textarea v-model="newRecipe.title" placeholder="Tittel" />
+    <input type="text" name="title" v-model="newRecipe.title" placeholder="Tittel" />
     <br />
 
     <label>Tags:</label>
@@ -26,7 +26,7 @@
     <h2>Ny ingrediens</h2>
 
     <label>Navn på ingrediens</label>
-    <textarea v-model="newIngredient.name" placeholder="ny ingrediens - navn (navn, kategori, mengde)" />
+    <textarea type="text" v-model="newIngredient.name" placeholder="ny ingrediens - navn (navn, kategori, mengde)" />
 
     <label>Kategori</label>
     <select v-model="newIngredient.category">
@@ -38,11 +38,13 @@
     </select>
 
     <label>Antall/ mengde</label>
-    <textarea v-model="newIngredient.amount" placeholder="ny ingrediens - mengde" />
+    <input type="number" min="1" name="amount" v-model="newIngredient.amount" placeholder="ny ingrediens - mengde" />
     </div>
 
     <br />
     <button @click="addRecipe()">Lagre ny oppskrift</button>
+
+    {{ statusSaving ? "lagrer..." : "" }}
   </div>
 </template>
 
@@ -65,12 +67,15 @@ export default {
       },
       ingredient: [],
       selectedExistingIngredientIds: "placeholder",
+      statusSaving: false,
       possibleCategories: ["MEAT", "OTHER", "FROZEN"]
     };
   },
   methods: {
     addRecipe: async function() {
       const { title, tags } = this.newRecipe;
+
+      this.statusSaving = true;
 
       const description = title;
       const existingIngredients = this.selectedExistingIngredientIds.map(id => createExistingIngredientObject(id, 1))
@@ -86,10 +91,14 @@ export default {
         existingIngredients
       );
 
+
       this.newRecipe = {
         title: "",
         tags: ""
       };
+
+      this.statusSaving = false;
+
     }
   },
   mounted: async function() {

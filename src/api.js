@@ -51,7 +51,7 @@ export const postRecipe = (description, tags, newIngredients, existingIngredient
     existingIngredients: existingIngredients,
   }
 
-  return new Promise(() => {
+  return new Promise((resolve) => {
     window
       .fetch(BASE_URL + "/recipe", {
         method: "POST",
@@ -60,6 +60,7 @@ export const postRecipe = (description, tags, newIngredients, existingIngredient
         },
         body: JSON.stringify(data),
       })
+      .then(res => resolve(res.json()));
   });
 
 };
