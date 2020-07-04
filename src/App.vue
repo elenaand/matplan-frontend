@@ -1,16 +1,14 @@
 <template>
   <div id="app">
     <div class="recipes">
-      <Recipe v-for="day in days" :recipe="recipe" :key="day" :day="day" />
+      <Recipe v-for="day in days" :recipe="recipes" :key="day" :day="day" />
     </div>
 
     <!-- <ShoppingList /> -->
 
-    <router-link :to="{ name: 'new-recipe' }">Ny oppskrift</router-link>
-    -
+    <router-link :to="{ name: 'new-recipe' }">Ny oppskrift</router-link>-
     <router-link :to="{ name: 'shopping-list' }">Se handleliste</router-link>
-
-    <router-view/>
+    <router-view />
     <!-- <NewRecipe /> -->
   </div>
 </template>
@@ -26,12 +24,13 @@ export default {
   },
   methods: {
     goBack() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
   data: function() {
     return {
-      recipe: [],
+      recipes: [],
+      userChosenRecipes: [],
       days: [
         "Mandag",
         "Tirsdag",
@@ -44,7 +43,7 @@ export default {
     };
   },
   mounted: async function() {
-    this.recipe = await getRecipes();
+    this.recipes = await getRecipes();
   }
 };
 </script>
