@@ -4,7 +4,7 @@
 
     <div v-if="selected !== undefined && isSelectHidden">
       <h2 id="recipe-title">
-        {{recipe[selected].description}}
+        {{recipe[selected].name}}
         <delete-icon id="delete-icon" @click="toggleHideSelect()" />
       </h2>
     </div>
@@ -14,7 +14,7 @@
           v-for="option in recipe"
           v-bind:value="recipe.indexOf(option)"
           v-bind:key="option.id"
-        >{{ option.description }}</option>
+        >{{ option.name }}</option>
       </select>
       <button class="button" v-if="selected !== undefined" @click="toggleHideSelect()">ok</button>
     </div>
@@ -36,23 +36,23 @@ import DeleteIcon from "vue-material-design-icons/Delete.vue";
 export default {
   name: "Recipe",
   components: {
-    DeleteIcon
+    DeleteIcon,
   },
   props: {
     recipe: Array,
-    day: String
+    day: String,
   },
-  data: function() {
+  data: function () {
     return {
       selected: undefined,
-      isSelectHidden: true
+      isSelectHidden: true,
     };
   },
   methods: {
-    toggleHideSelect: function() {
+    toggleHideSelect: function () {
       this.isSelectHidden = !this.isSelectHidden;
-    }
-  }
+    },
+  },
 };
 </script>
 

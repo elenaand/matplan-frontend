@@ -3,7 +3,7 @@
     <h1>Legg til ny oppskrift</h1>
 
     <label>Tittel:</label>
-    <input type="text" name="title" v-model="newRecipe.title" placeholder="Tittel" />
+    <input type="text" name="title" v-model="newRecipe.name" placeholder="Tittel" />
     <br />
 
     <label>Tags:</label>
@@ -58,68 +58,60 @@
 </template>
 
 <script>
-import { postRecipe, getIngredients } from "../api.js";
 import {
-  createNewIngredientObject,
-  createExistingIngredientObject
-} from "../utils.js";
+  postRecipe,
+  getIngredients,
+  postIngredient,
+  postIngredientForRecipe,
+} from "../api.js";
 
 export default {
   name: "NewRecipe",
-  data: function() {
+  data: function () {
     return {
       newRecipe: {
-        title: "",
-        tags: ""
+        name: "",
+        tags: "",
       },
       newIngredient: {
         name: "",
         category: "placeholder",
-        amount: ""
+        amount: "",
       },
       ingredient: [],
-      selectedExistingIngredientIds: "placeholder",
+      selectedExistingIngredientIds: [],
       statusSaving: false,
-      possibleCategories: ["MEAT", "OTHER", "FROZEN"]
+      possibleCategories: ["MEAT", "OTHER", "VEGETABLES", "FROZEN"],
     };
   },
   methods: {
-    addRecipe: async function() {
-      const { title, tags } = this.newRecipe;
-
+    addRecipe: async function () {
       this.statusSaving = true;
 
-      const description = title;
-      const existingIngredients = this.selectedExistingIngredientIds.map(id =>
-        createExistingIngredientObject(id, 1)
+      const recipeId = await postRecipe(
+        this.newRecipe.name,
+        this.newRecipe.tags
+      );
+      const ingredientId = await postIngredient(
+        this.newIngredient.name,
+        this.newIngredient.category
       );
 
-      const newIngredients = [
-        createNewIngredientObject(
-          this.newIngredient.name,
-          this.newIngredient.category,
-          parseInt(this.newIngredient.amount)
-        )
-      ];
-
-      await postRecipe(
-        description,
-        tags.split(","),
-        newIngredients,
-        existingIngredients
+      await postIngredientForRecipe(
+        recipeId,
+        ingredientId,
+        this.newIngredient.amount
       );
-
-      this.newRecipe = {
-        title: "",
-        tags: ""
-      };
+      this.selectedExistingIngredientIds.forEach((element) =>
+        postIngredientForRecipe(recipeId, element, 1)
+      );
 
       this.statusSaving = false;
-    }
+    },
   },
-  mounted: async function() {
+  mounted: async function () {
     this.ingredient = await getIngredients();
-  }
+  },
 };
 </script>
 

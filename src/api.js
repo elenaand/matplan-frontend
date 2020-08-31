@@ -1,4 +1,4 @@
-const BASE_URL = "https://md1wxt4y6d.execute-api.eu-west-1.amazonaws.com/dev";
+const BASE_URL = "http://localhost:8080";
 
 export const getRecipes = () => {
   return new Promise((resolve) => {
@@ -43,16 +43,12 @@ export const getIngredients = () => {
 	]
 }*/
 export const postRecipe = (
-  description,
+  name,
   tags,
-  newIngredients,
-  existingIngredients
 ) => {
   const data = {
-    description: description,
-    tags: tags,
-    newIngredients: newIngredients,
-    existingIngredients: existingIngredients,
+    name: name,
+    tags: [tags],
   };
 
   return new Promise((resolve) => {
@@ -61,9 +57,47 @@ export const postRecipe = (
         method: "POST",
         headers: {
           Accept: "application/json",
+          "Content-type": "application/json"
         },
         body: JSON.stringify(data),
       })
-      .then((res) => resolve(res.json()));
+      .then((res) => resolve(res.text()));
   });
 };
+
+export const postIngredient = (name, category) => {
+  const data = {
+    name: name,
+    category: category
+  };
+
+  return new Promise((resolve) => {
+    window.fetch(BASE_URL + "/ingredient", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data),
+    }).then((res) => resolve(res.text()));
+  })
+}
+
+export const postIngredientForRecipe = (recipeId, ingredientId, amount) => {
+  const data = {
+    recipeId: recipeId, 
+    ingredientId: ingredientId, 
+    amount: amount,
+  };
+
+  return new Promise((resolve) => {
+    window.fetch(BASE_URL + "/ingredientForRecipe", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data),
+    }).then((res) => resolve(res.text()));
+  })
+}
