@@ -51,6 +51,10 @@
       />
     </div>
 
+    <button @click.prevent="incrementCounter()">Legg til ny ingrediens</button>
+    <p>telling: {{ newIngredientCount }}</p>
+      <NewIngredient />
+
     <br />
     <button @click="addRecipe()">Lagre ny oppskrift</button>
     {{ statusSaving ? "lagrer..." : "" }}
@@ -81,7 +85,9 @@ export default {
       ingredient: [],
       selectedExistingIngredientIds: [],
       statusSaving: false,
-      possibleCategories: ["MEAT", "OTHER", "VEGETABLES", "FROZEN"],
+      possibleCategories: ["MEAT", "VEGETABLES", "FROZEN", "OTHER"],
+      newIngredientsData: [],
+      newIngredientCount: 0
     };
   },
   methods: {
@@ -105,9 +111,11 @@ export default {
       this.selectedExistingIngredientIds.forEach((element) =>
         postIngredientForRecipe(recipeId, element, 1)
       );
-
       this.statusSaving = false;
     },
+    incrementCounter: function() {
+      this.newIngredientCount += 1;
+    }
   },
   mounted: async function () {
     this.ingredient = await getIngredients();
