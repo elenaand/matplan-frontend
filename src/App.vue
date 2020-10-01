@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div class="recipes">
       <Recipe v-for="day in days" :recipe="recipe" :key="day" :day="day" />
     </div>
@@ -19,7 +19,6 @@ import Recipe from "./components/Recipe.vue";
 import { getRecipes } from "./api.js";
 
 export default {
-  name: "app",
   components: {
     Recipe
   },

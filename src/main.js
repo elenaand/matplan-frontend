@@ -1,28 +1,25 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createApp } from "vue";
+import { createRouter, createWebHashHistory } from "vue-router";
 import App from "./App.vue";
-
-Vue.config.productionTip = false;
-Vue.use(VueRouter);
+import NewRecipe from "./components/NewRecipe.vue"
+import ShoppingList from "./components/ShoppingList.vue"
 
 const routes = [
   {
     path: "/new-recipe",
     name: "new-recipe",
-    component: () => import("./components/NewRecipe.vue"),
+    component: NewRecipe,
   },
   {
     path: "/shopping-list",
     name: "shopping-list",
-    component: () => import("./components/ShoppingList.vue"),
+    component: ShoppingList,
   },
 ];
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHashHistory(),
   routes, // short for `routes: routes`
 });
 
-new Vue({
-  render: (h) => h(App),
-  router,
-}).$mount("#app");
+createApp(App).use(router).mount("#app");
