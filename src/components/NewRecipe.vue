@@ -19,44 +19,15 @@
         v-bind:key="option.id"
       >{{ option.name }}</option>
     </select>
+
+    <button id="add-ingredient" @click.prevent="incrementCounter()">Legg til ny ingrediens</button>
+    <ul id="new-ingredients-list">
+      <li v-for="n in newIngredients.length" v-bind:key="n">
+        <new-ingredient :ingredientIndex="n-1" />
+      </li>
+    </ul>
     <br />
-    <br />
-
-    <div id="new-ingredient">
-      <h2>Ny ingrediens</h2>
-
-      <label>Navn på ingrediens</label>
-      <textarea
-        type="text"
-        v-model="newIngredient.name"
-        placeholder="ny ingrediens - navn (navn, kategori, mengde)"
-      />
-
-      <label>Kategori</label>
-      <select v-model="newIngredient.category">
-        <option
-          v-for="option in possibleCategories"
-          v-bind:value="option"
-          v-bind:key="option"
-        >{{ option }}</option>
-      </select>
-
-      <label>Antall/ mengde</label>
-      <input
-        type="number"
-        min="1"
-        name="amount"
-        v-model="newIngredient.amount"
-        placeholder="ny ingrediens - mengde"
-      />
-    </div>
-
-    <button @click.prevent="incrementCounter()">Legg til ny ingrediens</button>
-    <p>telling: {{ newIngredientCount }}</p>
-      <NewIngredient />
-
-    <br />
-    <button @click="addRecipe()">Lagre ny oppskrift</button>
+    <button id="save-recipe" @click="addRecipe()">Lagre ny oppskrift</button>
     {{ statusSaving ? "lagrer..." : "" }}
   </div>
 </template>
@@ -68,58 +39,69 @@ import {
   postIngredient,
   postIngredientForRecipe,
 } from "../api.js";
+import NewIngredient from "./NewIngredient"
+import { newIngredients, addNewIngredient } from "../state/newIngredients"
 
 export default {
   name: "NewRecipe",
+  components: {
+    NewIngredient,
+  },
   data: function () {
     return {
       newRecipe: {
         name: "",
         tags: "",
       },
-      newIngredient: {
-        name: "",
-        category: "placeholder",
-        amount: "",
-      },
       ingredient: [],
       selectedExistingIngredientIds: [],
       statusSaving: false,
-      possibleCategories: ["MEAT", "VEGETABLES", "FROZEN", "OTHER"],
-      newIngredientsData: [],
-      newIngredientCount: 0
     };
   },
   methods: {
     addRecipe: async function () {
+      console.log(this.newIngredients) // eslint-disable-line
       this.statusSaving = true;
 
       const recipeId = await postRecipe(
         this.newRecipe.name,
         this.newRecipe.tags
       );
-      const ingredientId = await postIngredient(
-        this.newIngredient.name,
-        this.newIngredient.category
-      );
+      
+      this.newIngredients.forEach(async (newIngredient) => {
+        const ingredientId = await postIngredient(
+          newIngredient.name,
+          newIngredient.category
+        );
 
-      await postIngredientForRecipe(
-        recipeId,
-        ingredientId,
-        this.newIngredient.amount
-      );
+        await postIngredientForRecipe(
+          recipeId,
+          ingredientId,
+          newIngredient.amount
+        );
+      })
+
       this.selectedExistingIngredientIds.forEach((element) =>
         postIngredientForRecipe(recipeId, element, 1)
       );
       this.statusSaving = false;
     },
     incrementCounter: function() {
-      this.newIngredientCount += 1;
+      addNewIngredient({
+        name: "",
+        category: "placeholder",
+        amount: "",
+      });
     }
   },
   mounted: async function () {
     this.ingredient = await getIngredients();
   },
+  setup() {
+    return {
+      newIngredients: newIngredients.value,
+    }
+  }
 };
 </script>
 
@@ -148,6 +130,14 @@ export default {
 button {
   padding: 0.5em;
   background-color: #f8e4e3;
+}
+
+button#add-ingredient {
+  margin: 0.5em 0 0.5em 0
+}
+
+button#save-recipe {
+  margin-top: 0.5em
 }
 
 @media screen and (max-width: 900px) {

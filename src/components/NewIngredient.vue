@@ -4,7 +4,6 @@
 
     <label>Navn på ingrediens</label>
     <textarea
-      type="text"
       v-model="newIngredient.name"
       placeholder="ny ingrediens - navn (navn, kategori, mengde)"
     />
@@ -30,22 +29,25 @@
 </template>
 
 <script>
+import { newIngredients } from "../state/newIngredients"
+
 export default {
   name: "NewIngredient",
   data: function () {
     return {
-      newIngredient: {
-        name: "",
-        category: "placeholder",
-        amount: "",
-      },
-      ingredient: [],
-      statusSaving: false,
       possibleCategories: ["MEAT", "OTHER", "VEGETABLES", "FROZEN"],
     };
   },
   methods: {
   },
+  props: {
+    ingredientIndex: Number,
+  },
+  setup(props) {
+    return {
+      newIngredient: newIngredients.value[props.ingredientIndex],
+    }
+  }
 };
 </script>
 

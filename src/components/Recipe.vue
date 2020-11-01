@@ -2,21 +2,20 @@
   <div class="card mobile-card">
     <h1 class="day-title">{{ day }}</h1>
 
-    <div v-if="selected !== undefined && isSelectHidden">
+    <div v-if="selectedRecipe !== undefined && isSelectHidden">
       <h2 id="recipe-title">
-        {{recipe[selected].name}}
-        <delete-icon id="delete-icon" @click="toggleHideSelect()" />
+        {{recipes[selectedRecipe].name}}
       </h2>
     </div>
     <div v-else>
-      <select v-model="selected">
+      <select v-model="selectedRecipe">
         <option
-          v-for="option in recipe"
-          v-bind:value="recipe.indexOf(option)"
+          v-for="option in recipes"
+          v-bind:value="recipes.indexOf(option)"
           v-bind:key="option.id"
         >{{ option.name }}</option>
       </select>
-      <button class="button" v-if="selected !== undefined" @click="toggleHideSelect()">ok</button>
+      <button class="button" v-if="selectedRecipe !== undefined" @click="toggleHideSelect()">ok</button>
     </div>
     <!--
     <h2>{{ selected !== undefined ? recipe[selected].description : "" }}</h2>
@@ -31,20 +30,15 @@
 </template>
 
 <script>
-import DeleteIcon from "vue-material-design-icons/Delete.vue";
-
 export default {
   name: "Recipe",
-  components: {
-    DeleteIcon,
-  },
   props: {
-    recipe: Array,
+    recipes: Array,
     day: String,
   },
   data: function () {
     return {
-      selected: undefined,
+      selectedRecipe: undefined,
       isSelectHidden: true,
     };
   },

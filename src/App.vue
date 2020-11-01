@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="recipes">
-      <Recipe v-for="day in days" :recipe="recipe" :key="day" :day="day" />
+      <Recipe v-for="day in days" :recipes="recipe" :key="day" :day="day" />
     </div>
 
     <!-- <ShoppingList /> -->
@@ -17,6 +17,7 @@
 <script>
 import Recipe from "./components/Recipe.vue";
 import { getRecipes } from "./api.js";
+import { addRecipes } from "./state/recipes"
 
 export default {
   components: {
@@ -43,6 +44,7 @@ export default {
   },
   mounted: async function() {
     this.recipe = await getRecipes();
+    addRecipes(this.recipe)
   }
 };
 </script>
